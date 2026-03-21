@@ -1,6 +1,4 @@
-﻿using Isopoh.Cryptography.Argon2;
-
-namespace EchoRoom.Application.Tests.Unit.Features.Authentication;
+﻿namespace EchoRoom.Application.Tests.Unit.Features.Authentication;
 
 public sealed class LoginHandlerTests
 {

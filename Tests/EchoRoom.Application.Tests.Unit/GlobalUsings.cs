@@ -6,6 +6,8 @@ global using NSubstitute;
 global using NSubstitute.ExceptionExtensions;
 global using Shouldly;
 
+global using Isopoh.Cryptography.Argon2;
+
 global using EchoRoom.Application.Features.Users.CreateUser;
 global using EchoRoom.Application.Features.Authentication.Login;
 
