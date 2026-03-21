@@ -3,9 +3,11 @@
 global using System.Linq.Expressions;
 
 global using NSubstitute;
+global using NSubstitute.ExceptionExtensions;
 global using Shouldly;
 
 global using EchoRoom.Application.Features.Users.CreateUser;
+global using EchoRoom.Application.Features.Authentication.Login;
 
 global using EchoRoom.Shared.Services.Services.Abstractions;
 

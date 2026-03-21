@@ -5,6 +5,8 @@ global using MediatR;
 global using EchoRoom.Api.Extensions;
 
 global using EchoRoom.Application.Features.Users.CreateUser;
+global using EchoRoom.Application.Features.Authentication.Login;
+
 global using EchoRoom.Application.Extensions;
 
 global using EchoRoom.Shared.Constants.Core;

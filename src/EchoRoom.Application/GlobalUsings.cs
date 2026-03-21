@@ -7,6 +7,7 @@ global using Microsoft.IdentityModel.Tokens;
 global using System.ComponentModel.DataAnnotations;
 global using System.Text;
 global using System.Reflection;
+global using System.Linq.Expressions;
 
 global using MediatR;
 

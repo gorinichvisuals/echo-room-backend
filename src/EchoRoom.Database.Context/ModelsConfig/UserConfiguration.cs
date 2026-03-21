@@ -45,6 +45,12 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(user => user.IsAdmin)
             .HasDefaultValue(false);
 
+        builder.Property(user => user.FailedLoginAttempts)
+            .HasDefaultValue(default);
+
+        builder.Property(user => user.LockoutEnd)
+            .HasDefaultValue(null);
+
         builder.HasOne(user => user.Role)
             .WithMany(role => role.Users)
             .HasForeignKey(user => user.RoleId)
