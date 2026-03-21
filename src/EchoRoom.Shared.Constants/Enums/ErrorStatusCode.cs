@@ -1,0 +1,12 @@
+﻿namespace EchoRoom.Shared.Constants.Enums;
+
+public enum ErrorStatusCode
+{
+    NONE,
+    VALIDATION_ERROR,
+    COUNTRY_DOES_NOT_EXIST,
+    USER_ALREADY_EXISTS_EMAIL,
+    USER_ALREADY_EXISTS_PHONE,
+    USER_ALREADY_EXISTS_NICKNAME,
+    INTERNAL_SERVER_ERROR
+}

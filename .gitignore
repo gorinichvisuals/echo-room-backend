@@ -417,6 +417,7 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# appsettings (local configs)
-appsettings.json
-appsettings.*.json
+**/appsettings.json
+**/appsettings.*.json
+
+
