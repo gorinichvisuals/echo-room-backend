@@ -19,6 +19,9 @@ public class User
     public DateTime UpdatedAt { get; set; }
     public DateTime LastLoginAt { get; set; }
 
+    public int FailedLoginAttempts { get; set; }
+    public DateTime? LockoutEnd { get; set; }
+
     public User()
     {
         CreatedAt = DateTime.UtcNow;

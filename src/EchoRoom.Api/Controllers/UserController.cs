@@ -5,9 +5,9 @@
 public class UserController(IMediator mediator) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> CreateUser(CreateUserCommand command)
+    public async Task<IActionResult> CreateUser(UserCreateCommand command)
     {
-        ApiResult<CreateUserResponse> result = await mediator.Send(command);
+        ApiResult<UserCreateResponse> result = await mediator.Send(command);
 
         return StatusCode(result.StatusCode, result);
     }

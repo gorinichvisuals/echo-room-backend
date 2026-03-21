@@ -1,6 +1,6 @@
 ﻿namespace EchoRoom.Application.Features.Users.CreateUser;
 
-public sealed class CreateUserCommand : IRequest<ApiResult<CreateUserResponse>>
+public sealed class UserCreateCommand : IRequest<ApiResult<UserCreateResponse>>
 {
     [Required, MaxLength(255)]
     public required string FullName { get; set; }

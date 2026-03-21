@@ -2,4 +2,5 @@
 
 public interface IUserRepository : IBaseRepository<User>
 {
+    Task<User?> GetUserWithRoleByEmail(string email);
 }
