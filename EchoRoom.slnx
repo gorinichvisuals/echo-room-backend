@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/Database/">
+    <Project Path="src/EchoRoom.Database.Context/EchoRoom.Database.Context.csproj" Id="5530341a-986e-4b13-9a9b-38f14238a557" />
+    <Project Path="src/EchoRoom.Database.Infrastructure/EchoRoom.Database.Infrastructure.csproj" Id="b659b055-150c-4da6-85fd-c181b1ab0da0" />
+  </Folder>
+  <Folder Name="/EchoRoom/">
+    <Project Path="src/EchoRoom.Api/EchoRoom.Api.csproj" Id="c31db724-0ef4-4c66-9861-e53a6f04e6ec" />
+    <Project Path="src/EchoRoom.Application/EchoRoom.Application.csproj" Id="d32a01db-0109-4037-8b0e-854fa2996f70" />
+  </Folder>
+  <Folder Name="/Integrations/">
+    <Project Path="src/EchoRoom.Integrations.Monobank/EchoRoom.Integrations.Monobank.csproj" Id="a289a0a1-1a0b-4cf6-a5da-9b2969543b4c" />
+  </Folder>
+  <Folder Name="/Shared/">
+    <Project Path="src/EchoRoom.Shared.Constants/EchoRoom.Shared.Constants.csproj" Id="8e0ab476-798c-48e0-9ba1-839d5244e414" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/EchoRoom.Api.Tests.Unit/EchoRoom.Api.Tests.Unit.csproj" Id="786aee59-4f24-431a-a4c8-e9d2cd5cbb58" />
+    <Project Path="Tests/EchoRoom.Application.Tests.Unit/EchoRoom.Application.Tests.Unit.csproj" Id="6f99b423-480c-4878-8b5e-e71ee78eb6ef" />
+  </Folder>
+</Solution>
