@@ -40,7 +40,7 @@ public sealed class JwtServiceTests
         jwt.Claims.ShouldContain(c => c.Type == UserClaims.Id && c.Value == userId.ToString());
         jwt.Claims.ShouldContain(c => c.Type == UserClaims.Email && c.Value == email);
         jwt.Claims.ShouldContain(c => c.Type == UserClaims.Role && c.Value == role);
-        jwt.Claims.ShouldContain(c => c.Type == UserClaims.TwitchNickname && c.Value == twitchNickname);
+        jwt.Claims.ShouldContain(c => c.Type == UserClaims.StreamerNickname && c.Value == twitchNickname);
     }
 
     #endregion

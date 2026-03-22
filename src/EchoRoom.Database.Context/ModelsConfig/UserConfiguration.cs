@@ -60,5 +60,10 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .WithMany(country => country.Users)
             .HasForeignKey(user => user.CountryId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(user => user.Balances)
+            .WithOne(balance => balance.User)
+            .HasForeignKey(balance => balance.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
