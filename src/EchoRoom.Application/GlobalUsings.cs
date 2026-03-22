@@ -3,6 +3,7 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.AspNetCore.Http;
 
 global using System.ComponentModel.DataAnnotations;
 global using System.Text;

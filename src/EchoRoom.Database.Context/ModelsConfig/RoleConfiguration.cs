@@ -17,8 +17,8 @@ internal sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
             .IsUnique();
 
         builder.HasMany(role => role.Users)
-            .WithOne(users => users.Role)
-            .HasForeignKey(users => users.RoleId)
+            .WithOne(user => user.Role)
+            .HasForeignKey(user => user.RoleId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasData(

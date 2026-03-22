@@ -45,4 +45,10 @@ public static class ServiceCollectionExtensions
                     });
             });
     }
+
+    public static void AddProviders(this IServiceCollection services) 
+    {
+        services.AddScoped<ISessionProvider, SessionProvider>();
+        services.AddHttpContextAccessor();
+    }
 }

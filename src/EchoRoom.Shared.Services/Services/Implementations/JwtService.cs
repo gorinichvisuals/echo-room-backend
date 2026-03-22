@@ -4,14 +4,14 @@ internal sealed class JwtService(IOptions<JWTOptions> options) : IJwtService
 {
     private readonly JwtSecurityTokenHandler tokenHandler = new();
 
-    public string CreateAccessToken(int userId, string email, string role, string twitchNickname)
+    public string CreateAccessToken(int userId, string email, string role, string streamerNickname)
     {
         Claim[] claims =
         [
             new Claim(UserClaims.Id, userId.ToString()!),
             new Claim(UserClaims.Email, email),
             new Claim(UserClaims.Role, role),
-            new Claim(UserClaims.TwitchNickname, twitchNickname)
+            new Claim(UserClaims.StreamerNickname, streamerNickname)
         ];
 
         JwtSecurityToken token = new(
