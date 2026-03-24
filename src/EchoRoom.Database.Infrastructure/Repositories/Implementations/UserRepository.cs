@@ -4,10 +4,10 @@ internal sealed class UserRepository(EchoRoomContext context) : IUserRepository
 {
     public EchoRoomContext Context { get; } = context;
 
-    public async Task<User?> GetUserWithRoleByEmail(string email)
+    public async Task<User?> GetUserWithRoleByStreamerNickname(string streamerNickname)
         => await Context.Set<User>()
             .AsTracking()
-            .Where(user => user.Email == email)
+            .Where(user => user.StreamerNickname == streamerNickname)
             .Include(user => user.Role)
             .FirstOrDefaultAsync();
 }

@@ -66,7 +66,8 @@ public static class ServiceCollectionExtensions
                         context.Response.StatusCode = EchoRoomHttpStatusCode.Unauthorized;
                         context.Response.ContentType = "application/json";
 
-                        ApiResult result = ApiResult.Fail(EchoRoomHttpStatusCode.Unauthorized, "Token is missing, invalid, or expired", ErrorStatusCode.UNAUTHORIZED);
+                        ApiResult result = ApiResult.Fail(
+                            EchoRoomHttpStatusCode.Unauthorized, "Token is missing, invalid, or expired", ErrorStatusCode.UNAUTHORIZED);
 
                         return context.Response.WriteAsJsonAsync(result);
                     },
@@ -76,7 +77,8 @@ public static class ServiceCollectionExtensions
                         context.Response.StatusCode = EchoRoomHttpStatusCode.Forbidden;
                         context.Response.ContentType = "application/json";
 
-                        ApiResult result = ApiResult.Fail(EchoRoomHttpStatusCode.Forbidden, "You do not have permission to access this resource", ErrorStatusCode.FORBIDDEN);
+                        ApiResult result = ApiResult.Fail(
+                            EchoRoomHttpStatusCode.Forbidden, "You do not have permission to access this resource", ErrorStatusCode.FORBIDDEN);
 
                         return context.Response.WriteAsJsonAsync(result);
                     }

@@ -1,5 +1,7 @@
 ﻿namespace EchoRoom.Api.Extensions;
 
+#pragma warning disable IDE0305
+
 public static class ServiceCollectionExtensions
 {
     public static void AddCustomValidationResponse(this IServiceCollection services)
@@ -82,6 +84,17 @@ public static class ServiceCollectionExtensions
         {
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
             options.RoutePrefix = string.Empty;
+        });
+    }
+
+    public static void AddRedisCache(this IServiceCollection services, IConfiguration configuration)
+    {
+        RedisOptions redisOptions = configuration.GetSection(nameof(RedisOptions)).Get<RedisOptions>()!;
+
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = redisOptions.Configuration;
+            options.InstanceName = redisOptions.InstanceName;
         });
     }
 }
