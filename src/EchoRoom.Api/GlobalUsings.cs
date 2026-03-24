@@ -1,5 +1,8 @@
 ﻿global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.OpenApi;
+
+global using Swashbuckle.AspNetCore.Annotations;
 
 global using System.Text.Json.Serialization;
 
@@ -7,6 +10,7 @@ global using MediatR;
 
 global using EchoRoom.Api.Extensions;
 global using EchoRoom.Api.Providers;
+global using EchoRoom.Api.SwaggerResponse;
 
 global using EchoRoom.Application.Features.Users.CreateUser;
 global using EchoRoom.Application.Features.Authentication.Login;
