@@ -32,8 +32,8 @@ public sealed class UserGetPersonalInfoHandler(
         FullName = user.FullName,
         Email = user.Email,
         Phone = user.PhoneNumber,
-        BirthDate = user.BirthDate,
-        CreatedAt = user.CreatedAt,
+        BirthDate = DateTime.SpecifyKind(user.BirthDate, DateTimeKind.Utc),
+        CreatedAt = DateTime.SpecifyKind(user.CreatedAt, DateTimeKind.Utc),
         Role = new RoleDto 
         { 
             Id = user.Role.Id,

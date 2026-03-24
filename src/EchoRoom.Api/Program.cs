@@ -5,7 +5,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddEchoRoomSwagger();
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddCustomValidationResponse();
 builder.Services.AddEchoRoomCors();
@@ -15,7 +16,7 @@ WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseEchoRoomSwagger();
 }
 
 app.UseCors();
