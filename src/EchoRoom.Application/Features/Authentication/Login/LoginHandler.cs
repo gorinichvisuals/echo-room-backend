@@ -3,17 +3,18 @@
 public sealed class LoginHandler(
     IUnitOfWork unitOfWork, 
     IJwtService jwtService, 
+    ICacheService cacheService,
     ILogger<LoginHandler> logger) : IRequestHandler<LoginCommand, ApiResult<LoginResponse>>
 {
     public async Task<ApiResult<LoginResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            User? existingUser = await unitOfWork.UserRepository.GetUserWithRoleByEmail(request.Email);
+            User? existingUser = await unitOfWork.UserRepository.GetUserWithRoleByStreamerNickname(request.StreamerNickname);
 
             if (existingUser is null)
                 return ApiResult<LoginResponse>.Fail(
-                    EchoRoomHttpStatusCode.Unauthorized, "User with the current email does not exist.", ErrorStatusCode.USER_DOES_NOT_EXIST_EMAIL);
+                    EchoRoomHttpStatusCode.Unauthorized, "User with the current nickname does not exist.", ErrorStatusCode.USER_DOES_NOT_EXIST_NICKNAME);
 
             if (existingUser.LockoutEnd.HasValue && existingUser.LockoutEnd.Value > DateTime.UtcNow)
                 return ApiResult<LoginResponse>.Fail(
@@ -56,16 +57,26 @@ public sealed class LoginHandler(
         }
     }
 
-    private LoginResponse CreateResponse(User userDto, bool staySignIn)
-        => new()
+    private LoginResponse CreateResponse(User user, bool staySignIn)
+    {
+        LoginResponse loginResponse = new()
         {
             Tokens = new TokensDto
             {
-                AccessToken = jwtService.CreateAccessToken(userDto.Id, userDto.Email, userDto.Role.Name, userDto.StreamerNickname),
+                AccessToken = jwtService.CreateAccessToken(user.Id, user.Email, user.Role.Name, user.StreamerNickname),
                 RefreshToken = staySignIn
-                    ? jwtService.CreateRefreshToken(userDto.Id, userDto.Email)
+                    ? jwtService.CreateRefreshToken(user.Id, user.Email)
                     : string.Empty,
             },
             StaySignIn = staySignIn
         };
+
+        if (staySignIn)
+        {
+            string refreshTokenKey = EchoRoomCache.RefreshTokenKey + user.Email;
+            cacheService.Set(refreshTokenKey, loginResponse.Tokens.RefreshToken, TimeSpan.FromDays(2));
+        }
+
+        return loginResponse;
+    }
 }

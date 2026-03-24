@@ -4,6 +4,7 @@ public sealed class LoginHandlerTests
 {
     private readonly IUnitOfWork _unitOfWorkMock;
     private readonly IJwtService _jwtServiceMock;
+    private readonly ICacheService _cacheServiceMock;
     private readonly ILogger<LoginHandler> _loggerMock;
 
     private readonly LoginHandler _handler;
@@ -12,9 +13,14 @@ public sealed class LoginHandlerTests
     {
         _unitOfWorkMock = Substitute.For<IUnitOfWork>();
         _jwtServiceMock = Substitute.For<IJwtService>();
+        _cacheServiceMock = Substitute.For<ICacheService>();
         _loggerMock = Substitute.For<ILogger<LoginHandler>>();
 
-        _handler = new LoginHandler(_unitOfWorkMock, _jwtServiceMock, _loggerMock);
+        _handler = new LoginHandler(
+            _unitOfWorkMock, 
+            _jwtServiceMock, 
+            _cacheServiceMock, 
+            _loggerMock);
     }
 
     [Fact]
@@ -26,11 +32,11 @@ public sealed class LoginHandlerTests
 
         LoginCommand request = new()
         {
-            Email = "test@gmail.com",
+            StreamerNickname = "testStreamer",
             Password = "testPassword"
         };
 
-        _unitOfWorkMock.UserRepository.GetUserWithRoleByEmail(request.Email)
+        _unitOfWorkMock.UserRepository.GetUserWithRoleByStreamerNickname(request.StreamerNickname)
             .Returns(existingUser);
 
         // Act
@@ -41,8 +47,8 @@ public sealed class LoginHandlerTests
         result.Data.ShouldBeNull();
         result.IsSucceed.ShouldBeFalse();
         result.StatusCode.ShouldBe(EchoRoomHttpStatusCode.Unauthorized);
-        result.ErrorCode.ShouldBe(nameof(ErrorStatusCode.USER_DOES_NOT_EXIST_EMAIL));
-        result.ErrorMessage.ShouldBe("User with the current email does not exist.");
+        result.ErrorCode.ShouldBe(nameof(ErrorStatusCode.USER_DOES_NOT_EXIST_NICKNAME));
+        result.ErrorMessage.ShouldBe("User with the current nickname does not exist.");
     }
 
     [Fact]
@@ -63,11 +69,11 @@ public sealed class LoginHandlerTests
 
         LoginCommand request = new()
         {
-            Email = "test@gmail.com",
+            StreamerNickname = "testStreamer",
             Password = "testPassword"
         };
 
-        _unitOfWorkMock.UserRepository.GetUserWithRoleByEmail(request.Email)
+        _unitOfWorkMock.UserRepository.GetUserWithRoleByStreamerNickname(request.StreamerNickname)
             .Returns(existingUser);
 
         // Act
@@ -96,15 +102,15 @@ public sealed class LoginHandlerTests
             FailedLoginAttempts = 4,
         };
 
-        _unitOfWorkMock.UserRepository.GetUserWithRoleByEmail(user.Email)
-            .Returns(user);
-
         LoginCommand request = new() 
         {
-            Email = user.Email,
+            StreamerNickname = "testStreamer",
             Password = "wrongPassword",
             StaySignIn = false
         };
+
+        _unitOfWorkMock.UserRepository.GetUserWithRoleByStreamerNickname(request.StreamerNickname)
+            .Returns(user);
 
         // Act
         ApiResult<LoginResponse> result = await _handler.Handle(request, CancellationToken.None);
@@ -138,7 +144,7 @@ public sealed class LoginHandlerTests
 
         LoginCommand request = new()
         {
-            Email = user.Email,
+            StreamerNickname = "testStreamer",
             Password = "correctPassword",
             StaySignIn = true
         };
@@ -156,7 +162,7 @@ public sealed class LoginHandlerTests
             StaySignIn = request.StaySignIn,
         };
 
-        _unitOfWorkMock.UserRepository.GetUserWithRoleByEmail(user.Email)
+        _unitOfWorkMock.UserRepository.GetUserWithRoleByStreamerNickname(request.StreamerNickname)
             .Returns(user);
 
         _jwtServiceMock.CreateAccessToken(user.Id, user.Email, user.Role.Name, user.StreamerNickname)
@@ -172,6 +178,9 @@ public sealed class LoginHandlerTests
         result.IsSucceed.ShouldBeTrue();
         result.StatusCode.ShouldBe(EchoRoomHttpStatusCode.OK);
         result.Data!.ShouldBeEquivalentTo(expectedResult);
+
+        await _cacheServiceMock.Received(1)
+            .Set(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<TimeSpan>());
     }
 
     [Fact]
@@ -195,7 +204,7 @@ public sealed class LoginHandlerTests
 
         LoginCommand request = new()
         {
-            Email = user.Email,
+            StreamerNickname = "testStreamer",
             Password = "correctPassword",
             StaySignIn = false
         };
@@ -212,7 +221,7 @@ public sealed class LoginHandlerTests
             StaySignIn = request.StaySignIn,
         };
 
-        _unitOfWorkMock.UserRepository.GetUserWithRoleByEmail(user.Email)
+        _unitOfWorkMock.UserRepository.GetUserWithRoleByStreamerNickname(request.StreamerNickname)
             .Returns(user);
 
         _jwtServiceMock.CreateAccessToken(user.Id, user.Email, user.Role.Name, user.StreamerNickname)
@@ -225,6 +234,9 @@ public sealed class LoginHandlerTests
         result.IsSucceed.ShouldBeTrue();
         result.StatusCode.ShouldBe(EchoRoomHttpStatusCode.OK);
         result.Data!.ShouldBeEquivalentTo(expectedResult);
+
+        await _cacheServiceMock.DidNotReceive()
+            .Set(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<TimeSpan>());
     }
 
     [Fact]
@@ -235,11 +247,11 @@ public sealed class LoginHandlerTests
 
         LoginCommand request = new()
         {
-            Email = "test@gmail.com",
+            StreamerNickname = "testStreamer",
             Password = "testPassword"
         };
 
-        _unitOfWorkMock.UserRepository.GetUserWithRoleByEmail(request.Email)
+        _unitOfWorkMock.UserRepository.GetUserWithRoleByStreamerNickname(request.StreamerNickname)
             .Throws(new Exception("Error occurred while login user."));
 
         // Act

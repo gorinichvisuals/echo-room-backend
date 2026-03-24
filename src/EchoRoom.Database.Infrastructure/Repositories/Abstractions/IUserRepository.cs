@@ -2,5 +2,5 @@
 
 public interface IUserRepository : IBaseRepository<User>
 {
-    Task<User?> GetUserWithRoleByEmail(string email);
+    Task<User?> GetUserWithRoleByStreamerNickname(string streamerNickname);
 }

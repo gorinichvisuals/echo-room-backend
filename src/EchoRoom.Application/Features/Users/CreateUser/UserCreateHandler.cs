@@ -3,6 +3,7 @@
 public sealed class UserCreateHandler(
     IUnitOfWork unitOfWork,
     IJwtService jwtService, 
+    ICacheService cacheService,
     ILogger<UserCreateHandler> logger) : IRequestHandler<UserCreateCommand, ApiResult<UserCreateResponse>>
 {
     public async Task<ApiResult<UserCreateResponse>> Handle(UserCreateCommand request, CancellationToken cancellationToken)
@@ -16,13 +17,13 @@ public sealed class UserCreateHandler(
                     EchoRoomHttpStatusCode.BadRequest, "Country not found. Creating user is impossible.", ErrorStatusCode.COUNTRY_DOES_NOT_EXIST);
 
             User? existingUser = await unitOfWork.UserRepository
-                .GetItem(user => user.Email == request.Email 
+                .GetItemWIthIncludes(user => user.Email == request.Email 
                               || user.PhoneNumber == request.PhoneNumber 
                               || user.StreamerNickname == request.StreamerNickname);
 
             if (existingUser?.Email == request.Email)
                 return ApiResult<UserCreateResponse>.Fail(
-                    EchoRoomHttpStatusCode.BadRequest, "User with current email already exists.", ErrorStatusCode.USER_ALREADY_EXISTS_EMAIL);
+                    EchoRoomHttpStatusCode.BadRequest, "User with current email already exists.", ErrorStatusCode.USER_ALREADY_EXISTS_NICKNAME);
 
             if(existingUser?.PhoneNumber == request.PhoneNumber)
                 return ApiResult<UserCreateResponse>.Fail(
@@ -49,7 +50,7 @@ public sealed class UserCreateHandler(
 
     private async Task<User> CreateUser(UserCreateCommand request)
     {
-        Role? userRole = await unitOfWork.RoleRepository.GetItem(role => role.Name == "BaseUser");
+        Role? userRole = await unitOfWork.RoleRepository.GetItemWIthIncludes(role => role.Name == "BaseUser");
 
         User newUser = new()
         {
@@ -71,7 +72,8 @@ public sealed class UserCreateHandler(
     }
 
     private UserCreateResponse CreateResponse(User newUser, bool staySignIn)
-        => new()
+    {
+        UserCreateResponse userCreateResponse = new()
         {
             Tokens = new TokensDto
             {
@@ -82,4 +84,14 @@ public sealed class UserCreateHandler(
             },
             StaySignIn = staySignIn
         };
+
+        if (staySignIn)
+        {
+            string refreshTokenKey = EchoRoomCache.RefreshTokenKey + newUser.Email;
+            cacheService.Set(refreshTokenKey, userCreateResponse.Tokens.RefreshToken, TimeSpan.FromDays(2));
+        }
+
+        return userCreateResponse;
+    }
+
 }

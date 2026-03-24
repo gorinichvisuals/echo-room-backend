@@ -7,15 +7,22 @@ public interface IBaseRepository<T> where T : class
     public async Task Add(T item)
         => await Context.Set<T>().AddAsync(item);
 
-    public async Task<T?> GetItem(
+    public async Task<T?> GetItemWIthIncludes(
         Expression<Func<T, bool>>? predicateExpression = null,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        params Expression<Func<T, object>>[] includes)
     {
         IQueryable<T> query = Context.Set<T>();
 
-        return predicateExpression is not null
-            ? await query.Where(predicateExpression).FirstOrDefaultAsync(cancellationToken)
-            : await query.FirstOrDefaultAsync(cancellationToken);
+
+        if (includes is not null && includes.Length is not 0)
+            foreach (Expression<Func<T, object>> include in includes)
+                query = query.Include(include);
+
+        if (predicateExpression is not null)
+            query = query.Where(predicateExpression);
+
+        return await query.FirstOrDefaultAsync(cancellationToken);
     }
 
     public async Task<TResult?> GetMappedItem<TResult>(

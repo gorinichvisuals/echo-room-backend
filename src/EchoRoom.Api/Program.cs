@@ -8,6 +8,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddEchoRoomSwagger();
 builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddRedisCache(builder.Configuration);
 builder.Services.AddCustomValidationResponse();
 builder.Services.AddEchoRoomCors();
 builder.Services.AddProviders();

@@ -14,4 +14,19 @@ internal sealed class SessionProvider(IHttpContextAccessor httpContextAccessor) 
 
         return userId;
     }
+
+    public string GetUserSessionEmail()
+    {
+        HttpContext context = httpContextAccessor.HttpContext!;
+
+        return context?.User?.Claims
+            .FirstOrDefault(claim => claim.Type == UserClaims.Email)?.Value ?? string.Empty;
+    }
+
+    public string GetUserSessionToken()
+    {
+        HttpContext context = httpContextAccessor.HttpContext!;
+
+        return context!.Request.Headers.Authorization.ToString().Replace("Bearer ", string.Empty);
+    }
 }

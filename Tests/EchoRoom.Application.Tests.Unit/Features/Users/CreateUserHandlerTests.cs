@@ -4,6 +4,7 @@ public sealed class CreateUserHandlerTests
 {
     private readonly IUnitOfWork _unitOfWorkMock;
     private readonly IJwtService _jwtServiceMock;
+    private readonly ICacheService _cacheServiceMock;
     private readonly ILogger<UserCreateHandler> _loggerMock;
 
     private readonly UserCreateHandler _handler;
@@ -12,9 +13,14 @@ public sealed class CreateUserHandlerTests
     {
         _unitOfWorkMock = Substitute.For<IUnitOfWork>();
         _jwtServiceMock = Substitute.For<IJwtService>();
+        _cacheServiceMock = Substitute.For<ICacheService>();
         _loggerMock = Substitute.For<ILogger<UserCreateHandler>>();
 
-        _handler = new UserCreateHandler(_unitOfWorkMock, _jwtServiceMock, _loggerMock);
+        _handler = new UserCreateHandler(
+            _unitOfWorkMock, 
+            _jwtServiceMock, 
+            _cacheServiceMock, 
+            _loggerMock);
     }
 
     [Fact]
@@ -82,7 +88,7 @@ public sealed class CreateUserHandlerTests
         _unitOfWorkMock.CountryRepository.Any(Arg.Any<Expression<Func<Country, bool>>>())
             .Returns(countryExists);
 
-        _unitOfWorkMock.UserRepository.GetItem(Arg.Any<Expression<Func<User, bool>>>())
+        _unitOfWorkMock.UserRepository.GetItemWIthIncludes(Arg.Any<Expression<Func<User, bool>>>())
             .Returns(existingUser);
 
         // Act
@@ -93,7 +99,7 @@ public sealed class CreateUserHandlerTests
         result.Data.ShouldBeNull();
         result.IsSucceed.ShouldBeFalse();
         result.StatusCode.ShouldBe(EchoRoomHttpStatusCode.BadRequest);
-        result.ErrorCode.ShouldBe(nameof(ErrorStatusCode.USER_ALREADY_EXISTS_EMAIL));
+        result.ErrorCode.ShouldBe(nameof(ErrorStatusCode.USER_ALREADY_EXISTS_NICKNAME));
         result.ErrorMessage.ShouldBe("User with current email already exists.");
     }
 
@@ -128,7 +134,7 @@ public sealed class CreateUserHandlerTests
         _unitOfWorkMock.CountryRepository.Any(Arg.Any<Expression<Func<Country, bool>>>())
             .Returns(countryExists);
 
-        _unitOfWorkMock.UserRepository.GetItem(Arg.Any<Expression<Func<User, bool>>>())
+        _unitOfWorkMock.UserRepository.GetItemWIthIncludes(Arg.Any<Expression<Func<User, bool>>>())
             .Returns(existingUser);
 
         // Act
@@ -174,7 +180,7 @@ public sealed class CreateUserHandlerTests
         _unitOfWorkMock.CountryRepository.Any(Arg.Any<Expression<Func<Country, bool>>>())
             .Returns(countryExists);
 
-        _unitOfWorkMock.UserRepository.GetItem(Arg.Any<Expression<Func<User, bool>>>())
+        _unitOfWorkMock.UserRepository.GetItemWIthIncludes(Arg.Any<Expression<Func<User, bool>>>())
             .Returns(existingUser);
 
         // Act
@@ -239,10 +245,10 @@ public sealed class CreateUserHandlerTests
         _unitOfWorkMock.CountryRepository.Any(Arg.Any<Expression<Func<Country, bool>>>())
             .Returns(countryExists);
 
-        _unitOfWorkMock.UserRepository.GetItem(Arg.Any<Expression<Func<User, bool>>>())
+        _unitOfWorkMock.UserRepository.GetItemWIthIncludes(Arg.Any<Expression<Func<User, bool>>>())
             .Returns(existingUser);
 
-        _unitOfWorkMock.RoleRepository.GetItem(Arg.Any<Expression<Func<Role, bool>>>())
+        _unitOfWorkMock.RoleRepository.GetItemWIthIncludes(Arg.Any<Expression<Func<Role, bool>>>())
             .Returns(role);
 
         _jwtServiceMock.CreateAccessToken(Arg.Any<int>(), request.Email, Arg.Any<string>(), request.StreamerNickname)
@@ -264,6 +270,9 @@ public sealed class CreateUserHandlerTests
 
         await _unitOfWorkMock.Received(1)
             .Save();
+
+        await _cacheServiceMock.DidNotReceive()
+            .Set(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<TimeSpan>());
     }
 
     [Fact]
@@ -316,10 +325,10 @@ public sealed class CreateUserHandlerTests
         _unitOfWorkMock.CountryRepository.Any(Arg.Any<Expression<Func<Country, bool>>>())
             .Returns(countryExists);
 
-        _unitOfWorkMock.UserRepository.GetItem(Arg.Any<Expression<Func<User, bool>>>())
+        _unitOfWorkMock.UserRepository.GetItemWIthIncludes(Arg.Any<Expression<Func<User, bool>>>())
             .Returns(existingUser);
 
-        _unitOfWorkMock.RoleRepository.GetItem(Arg.Any<Expression<Func<Role, bool>>>())
+        _unitOfWorkMock.RoleRepository.GetItemWIthIncludes(Arg.Any<Expression<Func<Role, bool>>>())
             .Returns(role);
 
         _jwtServiceMock.CreateAccessToken(Arg.Any<int>(), request.Email, Arg.Any<string>(), request.StreamerNickname)
@@ -341,6 +350,9 @@ public sealed class CreateUserHandlerTests
 
         await _unitOfWorkMock.Received(1)
             .Save();
+
+        await _cacheServiceMock.Received(1)
+            .Set(Arg.Any<string>(), Arg.Any<string>(), Arg.Any<TimeSpan>());
     }
 
     [Fact]
