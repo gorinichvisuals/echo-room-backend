@@ -29,4 +29,12 @@ internal sealed class SessionProvider(IHttpContextAccessor httpContextAccessor) 
 
         return context!.Request.Headers.Authorization.ToString().Replace("Bearer ", string.Empty);
     }
+
+    public string GetUserSessionRoleName()
+    {
+        HttpContext context = httpContextAccessor.HttpContext!;
+
+        return context?.User?.Claims
+            .FirstOrDefault(claim => claim.Type == UserClaims.Role)?.Value ?? string.Empty;   
+    }
 }

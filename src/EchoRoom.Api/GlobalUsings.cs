@@ -13,10 +13,11 @@ global using EchoRoom.Api.Extensions;
 global using EchoRoom.Api.Providers;
 global using EchoRoom.Api.SwaggerResponse;
 
-global using EchoRoom.Application.Features.Users.CreateUser;
-global using EchoRoom.Application.Features.Authentication.Login;
-global using EchoRoom.Application.Features.Users.GetPersonalInfo;
 global using EchoRoom.Application.Features.Authentication.RefreshToken;
+global using EchoRoom.Application.Features.Authentication.Login;
+global using EchoRoom.Application.Features.Users.CreateUser;
+global using EchoRoom.Application.Features.Users.GetPersonalInfo;
+global using EchoRoom.Application.Features.Users.GetUsersManaging;
 
 global using EchoRoom.Application.Extensions;
 

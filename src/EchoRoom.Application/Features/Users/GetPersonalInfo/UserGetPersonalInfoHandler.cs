@@ -25,7 +25,7 @@ public sealed class UserGetPersonalInfoHandler(
         }
     }
 
-    private readonly Expression<Func<User, UserGetPersonalInfoResponse>> MapToUserPersonalInfo = user => new UserGetPersonalInfoResponse
+    private static readonly Expression<Func<User, UserGetPersonalInfoResponse>> MapToUserPersonalInfo = user => new UserGetPersonalInfoResponse
     {
         Id = user.Id,
         StreamerNickname = user.StreamerNickname,

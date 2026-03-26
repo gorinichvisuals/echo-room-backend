@@ -45,6 +45,9 @@ internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(user => user.IsAdmin)
             .HasDefaultValue(false);
 
+        builder.Property(user => user.CanBeEditedByOtherAdmin)
+            .HasDefaultValue(false);
+
         builder.Property(user => user.FailedLoginAttempts)
             .HasDefaultValue(default);
 

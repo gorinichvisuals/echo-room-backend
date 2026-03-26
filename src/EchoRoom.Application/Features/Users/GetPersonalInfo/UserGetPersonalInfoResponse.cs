@@ -9,20 +9,7 @@ public sealed class UserGetPersonalInfoResponse
     public required string Phone { get; set; }
     public DateTime BirthDate { get; set; }
     public DateTime CreatedAt { get; set; }
-
-    public int Age
-    {
-        get
-        {
-            DateTime today = DateTime.UtcNow.Date;
-            int age = today.Year - BirthDate.Year;
-
-            if (today < BirthDate.AddYears(age))
-                age--;
-
-            return age;
-        }
-    }
+    public int Age => BirthDate.CalculateAge();
 
     public RoleDto Role { get; set; } = null!;
     public CountryDto Country { get; set; } = null!;

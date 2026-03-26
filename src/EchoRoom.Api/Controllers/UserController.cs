@@ -35,4 +35,17 @@ public class UserController(IMediator mediator, ISessionProvider sessionProvider
 
         return StatusCode(result.StatusCode, result);
     }
+
+    [HttpGet("managing")]
+    [Authorize(Roles = AuthorizationScopes.AdminOnly)]
+    [SwaggerResponse(EchoRoomHttpStatusCode.OK, type: typeof(Success<UserGetManagingListResponse>))]
+    [SwaggerResponse(EchoRoomHttpStatusCode.Unauthorized, type: typeof(Error))]
+    [SwaggerResponse(EchoRoomHttpStatusCode.Forbidden, type: typeof(Error))]
+    [SwaggerResponse(EchoRoomHttpStatusCode.InternalServerError, type: typeof(Error))]
+    public async Task<IActionResult> GetUsersListForManaging([FromQuery] UserGetManagingListQuery query, CancellationToken cancellationToken)
+    { 
+        ApiResult<UserGetManagingListResponse> result = await mediator.Send(query, cancellationToken);
+
+        return StatusCode(result.StatusCode, result);
+    }
 }

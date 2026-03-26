@@ -3,6 +3,7 @@ using System;
 using EchoRoom.Database.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EchoRoom.Database.Context.Migrations
 {
     [DbContext(typeof(EchoRoomContext))]
-    partial class EchoRoomContextModelSnapshot : ModelSnapshot
+    [Migration("20260325001150_AddCanBeEditedByOtherAdminPropertyToUserTable")]
+    partial class AddCanBeEditedByOtherAdminPropertyToUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
