@@ -1,4 +1,5 @@
-﻿namespace EchoRoom.Database.Context;
+﻿
+namespace EchoRoom.Database.Context;
 
 public sealed class EchoRoomContext : DbContext
 {

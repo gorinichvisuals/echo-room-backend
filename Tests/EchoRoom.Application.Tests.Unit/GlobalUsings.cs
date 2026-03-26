@@ -12,6 +12,7 @@ global using EchoRoom.Application.Features.Users.CreateUser;
 global using EchoRoom.Application.Features.Users.GetPersonalInfo;
 global using EchoRoom.Application.Features.Authentication.Login;
 global using EchoRoom.Application.Features.Authentication.RefreshToken;
+global using EchoRoom.Application.Features.Users.GetUsersManaging;
 
 global using EchoRoom.Shared.Services.Services.Abstractions;
 
@@ -20,5 +21,6 @@ global using EchoRoom.Shared.Constants.Core;
 global using EchoRoom.Shared.Constants.Enums;
 
 global using EchoRoom.Database.Infrastructure.UoW;
+global using EchoRoom.Database.Infrastructure.QueryParams;
 
 global using EchoRoom.Database.Context.Models;

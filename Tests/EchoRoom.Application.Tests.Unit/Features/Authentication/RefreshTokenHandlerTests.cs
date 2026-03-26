@@ -86,7 +86,11 @@ public sealed class RefreshTokenHandlerTests
         _cacheServiceMock.TryGet<string>(Arg.Any<string>())
             .Returns((true, "token"));
 
-        _unitOfWorkMock.UserRepository.GetItemWIthIncludes(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+        _unitOfWorkMock.UserRepository
+            .GetItemWIthIncludes(
+                Arg.Any<Expression<Func<User, bool>>>(),
+                Arg.Any<CancellationToken>(),
+                Arg.Any<Expression<Func<User, object>>[]>())
             .Returns(user);
 
         // Act
@@ -134,7 +138,11 @@ public sealed class RefreshTokenHandlerTests
         _cacheServiceMock.TryGet<string>(Arg.Any<string>())
             .Returns((true, "token"));
 
-        _unitOfWorkMock.UserRepository.GetItemWIthIncludes(Arg.Any<Expression<Func<User, bool>>>(), Arg.Any<CancellationToken>())
+        _unitOfWorkMock.UserRepository
+            .GetItemWIthIncludes(
+                Arg.Any<Expression<Func<User, bool>>>(), 
+                Arg.Any<CancellationToken>(), 
+                Arg.Any<Expression<Func<User, object>>[]>())
             .Returns(user);
 
         _jwtServiceMock.CreateAccessToken(user.Id, user.Email, user.Role.Name, user.StreamerNickname)

@@ -16,6 +16,7 @@ global using Isopoh.Cryptography.Argon2;
 
 global using EchoRoom.Shared.Services.Services.Abstractions;
 global using EchoRoom.Shared.Services.Extensions;
+global using EchoRoom.Shared.Services.Helpers;
 
 global using EchoRoom.Shared.Constants.Core;
 global using EchoRoom.Shared.Constants.Common;
@@ -25,5 +26,6 @@ global using EchoRoom.Shared.Constants.Options;
 
 global using EchoRoom.Database.Infrastructure.Extensions;
 global using EchoRoom.Database.Infrastructure.UoW;
+global using EchoRoom.Database.Infrastructure.QueryParams;
 
 global using EchoRoom.Database.Context.Models;

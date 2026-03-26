@@ -1,6 +1,6 @@
-﻿namespace EchoRoom.Database.Context.Models;
+﻿namespace EchoRoom.Application.Features.Users.GetUsersManaging;
 
-public class User
+public sealed class UserGetManagingResponse
 {
     public int Id { get; set; }
     public int RoleId { get; set; }
@@ -9,8 +9,9 @@ public class User
     public required string StreamerNickname { get; set; }
     public required string Email { get; set; }
     public required string PhoneNumber { get; set; }
-    public required string Password { get; set; }
+
     public DateTime BirthDate { get; set; }
+    public int Age => BirthDate.CalculateAge();
 
     public bool IsStreamer { get; set; }
     public bool IsAdmin { get; set; }
@@ -19,18 +20,4 @@ public class User
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
     public DateTime LastLoginAt { get; set; }
-
-    public int FailedLoginAttempts { get; set; }
-    public DateTime? LockoutEnd { get; set; }
-
-    public User()
-    {
-        CreatedAt = DateTime.UtcNow;
-        UpdatedAt = DateTime.UtcNow;
-        LastLoginAt = DateTime.UtcNow;
-    }
-
-    public Role Role { get; set; } = null!;
-    public Country Country { get; set; } = null!;
-    public ICollection<Balance> Balances { get; set; } = [];
 }
