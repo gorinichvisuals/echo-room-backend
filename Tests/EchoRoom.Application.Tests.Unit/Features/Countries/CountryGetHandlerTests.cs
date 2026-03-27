@@ -1,6 +1,4 @@
-﻿using static Pipelines.Sockets.Unofficial.SocketConnection;
-
-namespace EchoRoom.Application.Tests.Unit.Features.Countries;
+﻿namespace EchoRoom.Application.Tests.Unit.Features.Countries;
 
 public sealed class CountryGetHandlerTests
 {
