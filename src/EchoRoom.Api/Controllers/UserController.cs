@@ -48,4 +48,19 @@ public class UserController(IMediator mediator, ISessionProvider sessionProvider
 
         return StatusCode(result.StatusCode, result);
     }
+
+    [HttpPut("change-role")]
+    [Authorize(Roles = AuthorizationScopes.AdminOnly)]
+    [SwaggerResponse(EchoRoomHttpStatusCode.OK, type: typeof(Success<UserChangeRoleResponse>))]
+    [SwaggerResponse(EchoRoomHttpStatusCode.BadRequest, type: typeof(Error))]
+    [SwaggerResponse(EchoRoomHttpStatusCode.Unauthorized, type: typeof(Error))]
+    [SwaggerResponse(EchoRoomHttpStatusCode.Forbidden, type: typeof(Error))]
+    [SwaggerResponse(EchoRoomHttpStatusCode.NotFound, type: typeof(Error))]
+    [SwaggerResponse(EchoRoomHttpStatusCode.InternalServerError, type: typeof(Error))]
+    public async Task<IActionResult> ChangeUserRole(UserChangeRoleCommand command, CancellationToken cancellationToken)
+    {
+        ApiResult<UserChangeRoleResponse> result = await mediator.Send(command, cancellationToken);
+
+        return StatusCode(result.StatusCode, result);
+    }
 }

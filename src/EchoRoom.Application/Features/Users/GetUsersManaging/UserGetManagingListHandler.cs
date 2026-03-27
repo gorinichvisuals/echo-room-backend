@@ -40,8 +40,6 @@ public sealed class UserGetManagingListHandler(
         Email = user.Email,
         PhoneNumber = user.PhoneNumber,
         BirthDate = DateTime.SpecifyKind(user.BirthDate, DateTimeKind.Utc),
-        IsAdmin = user.IsAdmin,
-        IsStreamer = user.IsStreamer,
         CanBeEditedByOtherAdmin = user.CanBeEditedByOtherAdmin,
         CreatedAt = DateTime.SpecifyKind(user.CreatedAt, DateTimeKind.Utc),
         UpdatedAt = DateTime.SpecifyKind(user.UpdatedAt, DateTimeKind.Utc),
