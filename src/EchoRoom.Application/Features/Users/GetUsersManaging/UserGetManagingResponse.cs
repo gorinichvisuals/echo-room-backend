@@ -13,8 +13,6 @@ public sealed class UserGetManagingResponse
     public DateTime BirthDate { get; set; }
     public int Age => BirthDate.CalculateAge();
 
-    public bool IsStreamer { get; set; }
-    public bool IsAdmin { get; set; }
     public bool CanBeEditedByOtherAdmin { get; set; }
 
     public DateTime CreatedAt { get; set; }

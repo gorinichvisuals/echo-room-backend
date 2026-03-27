@@ -18,6 +18,7 @@ global using EchoRoom.Application.Features.Authentication.Login;
 global using EchoRoom.Application.Features.Users.CreateUser;
 global using EchoRoom.Application.Features.Users.GetPersonalInfo;
 global using EchoRoom.Application.Features.Users.GetUsersManaging;
+global using EchoRoom.Application.Features.Users.ChangeUserRole;
 
 global using EchoRoom.Application.Extensions;
 

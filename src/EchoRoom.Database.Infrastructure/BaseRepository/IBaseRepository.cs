@@ -25,6 +25,17 @@ public interface IBaseRepository<T> where T : class
         return await query.FirstOrDefaultAsync(cancellationToken);
     }
 
+    public async Task<ICollection<T>> GetItems(
+        Expression<Func<T, bool>>? predicateExpression = null,
+        CancellationToken cancellationToken = default)
+    {
+        IQueryable<T> query = Context.Set<T>();
+
+        return predicateExpression is not null
+            ? await query.Where(predicateExpression).ToListAsync(cancellationToken)
+            : await query.ToListAsync(cancellationToken);
+    }
+
     public async Task<TResult?> GetMappedItem<TResult>(
         Expression<Func<T, TResult>> selectExpression,
         Expression<Func<T, bool>>? predicateExpression = null,

@@ -50,8 +50,6 @@ public sealed class UserGetManagingListHandlerTests
                 Email = "user@test.com",
                 PhoneNumber = "+380500000000",
                 BirthDate = DateTime.UtcNow.AddYears(-20),
-                IsAdmin = false,
-                IsStreamer = true,
                 CanBeEditedByOtherAdmin = true,
                 CreatedAt = DateTime.UtcNow.AddDays(-10),
                 UpdatedAt = DateTime.UtcNow.AddDays(-1),

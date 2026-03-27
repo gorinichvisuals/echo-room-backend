@@ -12,8 +12,6 @@ public class User
     public required string Password { get; set; }
     public DateTime BirthDate { get; set; }
 
-    public bool IsStreamer { get; set; }
-    public bool IsAdmin { get; set; }
     public bool CanBeEditedByOtherAdmin { get; set; }
 
     public DateTime CreatedAt { get; set; }
