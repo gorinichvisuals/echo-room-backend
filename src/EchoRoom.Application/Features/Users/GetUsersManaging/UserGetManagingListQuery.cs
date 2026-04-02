@@ -19,4 +19,4 @@ public sealed class SortingDto
 {
     public UserSortProperty PropertyName { get; set; }
     public SortDirection Direction { get; set; }
-}   
+}

@@ -21,6 +21,7 @@ global using EchoRoom.Application.Features.Users.GetUsersManaging;
 global using EchoRoom.Application.Features.Users.ChangeUserRole;
 global using EchoRoom.Application.Features.Countries.GetCountries;
 global using EchoRoom.Application.Features.Roles.GetRoles;
+global using EchoRoom.Application.Features.Rooms.GetRooms;
 
 global using EchoRoom.Application.Extensions;
 

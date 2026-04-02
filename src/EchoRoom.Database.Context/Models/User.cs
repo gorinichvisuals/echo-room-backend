@@ -31,4 +31,6 @@ public class User
     public Role Role { get; set; } = null!;
     public Country Country { get; set; } = null!;
     public ICollection<Balance> Balances { get; set; } = [];
+    public ICollection<Room> CreatedRooms { get; set; } = [];
+    public ICollection<RoomParticipant> RoomParticipants { get; set; } = [];
 }
