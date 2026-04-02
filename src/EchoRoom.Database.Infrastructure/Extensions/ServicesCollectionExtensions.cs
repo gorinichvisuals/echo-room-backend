@@ -9,6 +9,7 @@ public static class ServicesCollectionExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
         services.AddScoped<ICountryRepository, CountryRepository>();
+        services.AddScoped<IRoomRepository, RoomRepository>();
 
         services.AddDatabaseContext(connectionString);
     }

@@ -1,4 +1,4 @@
-﻿namespace EchoRoom.Database.Infrastructure.Extensions;
+﻿namespace EchoRoom.Database.Infrastructure.Extensions.Sorting;
 
 public static class UserSortingExtensions
 {

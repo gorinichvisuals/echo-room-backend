@@ -26,7 +26,7 @@ public sealed class UserGetManagingListHandlerTests
             SearchQuery = "test",
             SkipItems = 0,
             TakeItems = 10,
-            Sorting = new SortingDto
+            Sorting = new Application.Features.Users.GetUsersManaging.SortingDto
             {
                 PropertyName = UserSortProperty.Username,
                 Direction = Shared.Constants.Enums.SortDirection.ASCENDING

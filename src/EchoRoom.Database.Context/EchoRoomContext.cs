@@ -7,6 +7,8 @@ public sealed class EchoRoomContext : DbContext
     public DbSet<Role> Roles { get; set; }
     public DbSet<Country> Countries { get; set; }
     public DbSet<Balance> Balances { get; set; }
+    public DbSet<Room> Rooms { get; set; }
+    public DbSet<RoomParticipant> RoomParticipants { get; set; }
 
     public EchoRoomContext()
     {
