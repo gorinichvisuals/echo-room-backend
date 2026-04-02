@@ -26,7 +26,7 @@ public sealed class RoomGetListHandlerTests
             SearchWord = "test",
             SkipItems = 0,
             TakeItems = 10,
-            SortingDto = new Application.Features.Rooms.GetRooms.SortingDto
+            Sorting = new Application.Features.Rooms.GetRooms.SortingDto
             {
                 PropertyName = RoomSortProperty.CreatedAt,
                 Direction = Shared.Constants.Enums.SortDirection.DESCENDING

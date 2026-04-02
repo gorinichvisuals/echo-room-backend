@@ -13,8 +13,8 @@ public sealed class RoomGetListHandler(
                 request.SearchWord, 
                 request.SkipItems,
                 request.TakeItems,
-                request.SortingDto.PropertyName, 
-                request.SortingDto.Direction, 
+                request.Sorting.PropertyName, 
+                request.Sorting.Direction, 
                 cancellationToken);
 
             RoomGetListResponse roomGetListResponse = new(rooms, totalCount);
